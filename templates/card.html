@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nicola Forster – Team Ensemble</title>
+    <title>{{name.full}} – {{organization}}</title>
     <style>
       /* Geist 1.5.1 */
       @font-face {
@@ -144,12 +144,6 @@
         display: inline-block;
       }
 
-      /*
-      .link:visited {
-        color: var(--link-color--visited);
-      }
-      */
-
       .link:hover {
         color: var(--color-black);
       }
@@ -243,52 +237,58 @@
   <body>
     <div class="card">
       <header>
-        <h1>Nicola Forster <span class="credentials">lic. iur.</span></h1>
-        <h2>Stifter und Co-Geschäftsleitung</h2>
+        <h1>{{name.full}}{{#if name.credentials}} <span class="credentials">{{name.credentials}}</span>{{/if}}</h1>
+        <h2>{{title}}</h2>
       </header>
 
       <div class="contact-info">
+        {{#if contact.phone.mobile}}
         <div class="contact-item">
           <div class="contact-label">Telefon Mobile</div>
           <div class="contact-value">
-            <a href="tel:+41792995181" class="link">+41 79 299 51 81</a>
+            <a href="tel:{{contact.phone.mobile_raw}}" class="link">{{contact.phone.mobile}}</a>
           </div>
         </div>
+        {{/if}}
 
+        {{#if contact.email}}
         <div class="contact-item">
           <div class="contact-label">E-Mail</div>
           <div class="contact-value">
-            <a href="mailto:nicola.forster@team-ensemble.ch" class="link"
-              >nicola.forster@team-ensemble.ch</a
-            >
+            <a href="mailto:{{contact.email}}" class="link">{{contact.email}}</a>
           </div>
         </div>
+        {{/if}}
 
+        {{#if contact.website}}
         <div class="contact-item">
           <div class="contact-label">Website</div>
           <div class="contact-value">
             <a
-              href="https://team-ensemble.ch"
+              href="{{contact.website}}"
               target="_blank"
               rel="noopener"
               class="link"
-              >team-ensemble.ch</a
+              >{{websiteDisplay}}</a
             >
           </div>
         </div>
+        {{/if}}
       </div>
 
       <div class="actions">
-        <button class="button button--primary" onclick="downloadVCard()">
+        <a href="{{vcardFilename}}" download class="button button--primary">
           Kontakt speichern
-        </button>
+        </a>
+        {{#if social.linkedin}}
         <a
-          href="https://www.linkedin.com/in/nicolaforster/"
+          href="{{social.linkedin}}"
           target="_blank"
           rel="noopener"
           class="button"
           >LinkedIn</a
         >
+        {{/if}}
       </div>
 
       <footer>
@@ -301,35 +301,5 @@
         </a>
       </footer>
     </div>
-
-    <script>
-      function generateVCard() {
-        const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:Nicola Forster
-N:Forster;Nicola
-TITLE:Stifter und Co-Geschäftsleitung
-ORG:Team Ensemble
-TEL;TYPE=CELL:+41792995181
-EMAIL:nicola.forster@team-ensemble.ch
-URL:https://team-ensemble.ch
-URL:https://www.linkedin.com/in/nicolaforster/
-END:VCARD`;
-        return vcard;
-      }
-
-      function downloadVCard() {
-        const vcard = generateVCard();
-        const blob = new Blob([vcard], { type: "text/vcard" });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "Nicola-Forster.vcf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      }
-    </script>
   </body>
 </html>

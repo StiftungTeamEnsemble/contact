@@ -1,0 +1,19 @@
+# Nicola Forster
+# Contact card data
+
+name:
+  first: Nicola
+  last: Forster
+  full: Nicola Forster
+  credentials: lic. iur.
+
+title: Stifter und Co-Geschäftsleitung
+
+contact:
+  phone:
+    mobile: "+41 79 299 51 81"
+  email: nicola.forster@team-ensemble.ch
+  website: https://team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/nicolaforster/
