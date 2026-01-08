@@ -1,0 +1,17 @@
+# Nicola Forster
+# Contact card data
+
+name:
+  first: Martin
+  last: Roth
+  credentials:
+
+title: Stifter und Co-Geschäftsleitung
+
+contact:
+  phone:
+    mobile: "+41 79 221 39 29"
+  email: martin.roth@team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/martin--roth/

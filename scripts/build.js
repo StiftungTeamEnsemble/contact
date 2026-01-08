@@ -78,7 +78,7 @@ function getWebsiteDisplay(url) {
  */
 function getRawPhoneNumber(formatted) {
   if (!formatted) return "";
-  return formatted.replace(/\D|\+/g, "");
+  return formatted.replace(/\s+/g, "");
 }
 
 /**
@@ -134,14 +134,38 @@ async function build() {
     copyDir(ASSETS_DIR, path.join(DIST_DIR));
   }
 
-  // Load template
-  const templatePath = path.join(TEMPLATES_DIR, "card.html");
-  if (!fs.existsSync(templatePath)) {
-    console.error("❌ Template not found:", templatePath);
+  // Load templates
+  const cardTemplatePath = path.join(TEMPLATES_DIR, "card.html");
+  const cardPartialPath = path.join(TEMPLATES_DIR, "card-partial.html");
+  const overviewTemplatePath = path.join(TEMPLATES_DIR, "overview.html");
+  const notFoundTemplatePath = path.join(TEMPLATES_DIR, "404.html");
+
+  if (!fs.existsSync(cardTemplatePath)) {
+    console.error("❌ Card template not found:", cardTemplatePath);
     process.exit(1);
   }
-  const templateSource = fs.readFileSync(templatePath, "utf-8");
-  const template = Handlebars.compile(templateSource);
+  if (!fs.existsSync(cardPartialPath)) {
+    console.error("❌ Card partial not found:", cardPartialPath);
+    process.exit(1);
+  }
+  if (!fs.existsSync(overviewTemplatePath)) {
+    console.error("❌ Overview template not found:", overviewTemplatePath);
+    process.exit(1);
+  }
+  if (!fs.existsSync(notFoundTemplatePath)) {
+    console.error("❌ 404 template not found:", notFoundTemplatePath);
+    process.exit(1);
+  }
+
+  const cardTemplateSource = fs.readFileSync(cardTemplatePath, "utf-8");
+  const cardPartialSource = fs.readFileSync(cardPartialPath, "utf-8");
+  const overviewTemplateSource = fs.readFileSync(overviewTemplatePath, "utf-8");
+  const notFoundTemplateSource = fs.readFileSync(notFoundTemplatePath, "utf-8");
+
+  const cardTemplate = Handlebars.compile(cardTemplateSource);
+  const cardPartialTemplate = Handlebars.compile(cardPartialSource);
+  const overviewTemplate = Handlebars.compile(overviewTemplateSource);
+  const notFoundTemplate = Handlebars.compile(notFoundTemplateSource);
 
   // Get all YAML files
   if (!fs.existsSync(DATA_DIR)) {
@@ -160,7 +184,9 @@ async function build() {
 
   console.log(`📇 Found ${yamlFiles.length} contact(s)\n`);
 
-  // Process each contact
+  // Load and process all contacts
+  const allContacts = [];
+
   for (const file of yamlFiles) {
     const filePath = path.join(DATA_DIR, file);
     const content = fs.readFileSync(filePath, "utf-8");
@@ -168,38 +194,76 @@ async function build() {
     const data = {
       ...dataRaw,
       organization: dataRaw.organization || "Stiftung Team Ensemble",
-      name : {
+      name: {
         ...dataRaw.name,
         full: `${dataRaw.name.first} ${dataRaw.name.last}`,
       },
       contact: {
         ...dataRaw.contact,
+        phone: {
+          ...dataRaw.contact?.phone,
+          mobile: dataRaw.contact?.phone?.mobile.replace(/\s+/g, " "),
+        },
+        email: dataRaw.contact?.email || "",
         website: dataRaw.contact?.website || "https://team-ensemble.ch",
-      }
+      },
     };
 
     const slug = data.slug || file.replace(/\.(yaml|yml)$/, "");
-    const outputDir = path.join(DIST_DIR, slug);
+    data.slug = slug;
+    allContacts.push(data);
+  }
+
+  // Generate individual contact pages
+  for (const data of allContacts) {
+    const outputDir = path.join(DIST_DIR, data.slug);
     ensureDir(outputDir);
 
-    console.log(`  → ${data.name.full} (${slug})`);
+    console.log(`  → ${data.name.full} (${data.slug})`);
 
     // Prepare template data
     const vcardFilename = getVCardFilename(data.name);
-    const templateData = {
+    const baseTemplateData = {
       ...data,
       websiteDisplay: getWebsiteDisplay(data.contact?.website),
       vcardFilename: vcardFilename,
     };
 
+    // Generate card partial HTML
+    const cardPartialHtml = cardPartialTemplate(baseTemplateData);
+
+    // Add partial to template data
+    const templateData = {
+      ...baseTemplateData,
+      cardPartial: cardPartialHtml,
+    };
+
     // Generate HTML
-    const html = template(templateData);
+    const html = cardTemplate(templateData);
     fs.writeFileSync(path.join(outputDir, "index.html"), html, "utf-8");
 
     // Generate vCard
     const vcard = generateVCard(data);
     fs.writeFileSync(path.join(outputDir, vcardFilename), vcard, "utf-8");
   }
+
+  // Generate overview page
+  console.log("\n📖 Generating overview page...");
+  const overviewData = {
+    organization: allContacts[0]?.organization || "Stiftung Team Ensemble",
+    contacts: allContacts,
+  };
+  const overviewHtml = overviewTemplate(overviewData);
+  fs.writeFileSync(path.join(DIST_DIR, "index.html"), overviewHtml, "utf-8");
+
+  // Generate 404 page
+  console.log("⚠️  Generating 404 page...");
+  const notFoundData = {
+    organization: allContacts[0]?.organization || "Stiftung Team Ensemble",
+    contacts: allContacts,
+  };
+  const notFoundHtml = notFoundTemplate(notFoundData);
+  fs.writeFileSync(path.join(DIST_DIR, "404.html"), notFoundHtml, "utf-8");
 
   // Create .nojekyll file to disable Jekyll processing on GitHub Pages
   fs.writeFileSync(path.join(DIST_DIR, ".nojekyll"), "", "utf-8");

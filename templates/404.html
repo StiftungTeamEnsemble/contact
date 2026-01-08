@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 – Seite nicht gefunden – {{organization}}</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <div class="content">
+      <header>
+        <h1>404</h1>
+        <h2>Seite nicht gefunden</h2>
+      </header>
+
+      <p style="margin-bottom: 2rem; color: var(--color-gray);">
+        Die gesuchte Seite existiert nicht. Hier sind alle verfügbaren Kontakte:
+      </p>
+
+      <div class="contact-items">
+        {{#each contacts}}
+        <div class="contact-list-item">
+          <h3>{{this.name.full}}</h3>
+          {{#if this.title}}<p>{{this.title}}</p>{{/if}}
+          <a href="/{{this.slug}}/" class="link">Zur Kontaktseite →</a>
+        </div>
+        {{/each}}
+      </div>
+
+      <footer>
+        <a href="https://team-ensemble.ch" title="Team Ensemble">
+          <img
+            src="https://team-ensemble.ch/assets/logo.svg"
+            alt="Team Ensemble"
+            class="logo"
+          />
+        </a>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<header>
+  <h1>
+    {{name.full}}{{#if name.credentials}}
+    <span class="credentials">{{name.credentials}}</span>{{/if}}
+  </h1>
+  <h2>{{title}}</h2>
+</header>
+
+<div class="contact-info">
+  {{#if contact.phone.mobile}}
+  <div class="contact-item">
+    <div class="contact-label">Telefon Mobile</div>
+    <div class="contact-value">
+      <a href="tel:{{contact.phone.mobile_raw}}" class="link"
+        >{{contact.phone.mobile}}</a
+      >
+    </div>
+  </div>
+  {{/if}} {{#if contact.email}}
+  <div class="contact-item">
+    <div class="contact-label">E-Mail</div>
+    <div class="contact-value">
+      <a href="mailto:{{contact.email}}" class="link">{{contact.email}}</a>
+    </div>
+  </div>
+  {{/if}} {{#if contact.website}}
+  <div class="contact-item">
+    <div class="contact-label">Website</div>
+    <div class="contact-value">
+      <a href="{{contact.website}}" target="_blank" rel="noopener" class="link"
+        >{{websiteDisplay}}</a
+      >
+    </div>
+  </div>
+  {{/if}}
+</div>
+
+<div class="actions">
+  <a href="{{vcardFilename}}" download class="button button--primary">
+    Kontakt speichern
+  </a>
+  {{#if social.linkedin}}
+  <a href="{{social.linkedin}}" target="_blank" rel="noopener" class="button"
+    >LinkedIn</a
+  >
+  {{/if}}
+</div>
+
+<footer>
+  <a href="https://team-ensemble.ch" title="Team Ensemble">
+    <img
+      src="https://team-ensemble.ch/assets/logo.svg"
+      alt="Team Ensemble"
+      class="logo"
+    />
+  </a>
+</footer>
