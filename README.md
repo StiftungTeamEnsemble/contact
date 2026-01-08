@@ -26,7 +26,6 @@ A static site generator for contact cards with vCard download support.
 name:
   first: Firstname
   last: Lastname
-  full: Firstname Lastname
   credentials: Dr. # optional
 
 title: Job Title
@@ -35,7 +34,6 @@ contact:
   phone:
     mobile: "+41 79 123 45 67"
   email: firstname.lastname@team-ensemble.ch
-  website: https://team-ensemble.ch
 
 social:
   linkedin: https://www.linkedin.com/in/username/

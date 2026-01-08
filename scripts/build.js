@@ -168,6 +168,14 @@ async function build() {
     const data = {
       ...dataRaw,
       organization: dataRaw.organization || "Stiftung Team Ensemble",
+      name : {
+        ...dataRaw.name,
+        full: `${dataRaw.name.first} ${dataRaw.name.last}`,
+      },
+      contact: {
+        ...dataRaw.contact,
+        website: dataRaw.contact?.website || "https://team-ensemble.ch",
+      }
     };
 
     const slug = data.slug || file.replace(/\.(yaml|yml)$/, "");
