@@ -1,0 +1,16 @@
+# Contact card data
+
+name:
+  first: Christoph
+  last: Kiss
+  credentials:
+
+title: 
+
+contact:
+  phone:
+    mobile: "+41 79 795 24 20"
+  email: christoph.kiss@team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/christoph-kiss/
