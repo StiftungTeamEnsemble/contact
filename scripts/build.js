@@ -214,6 +214,8 @@ async function build() {
     allContacts.push(data);
   }
 
+  allContacts.sort((a, b) => a.name.last.localeCompare(b.name.last));
+
   // Generate individual contact pages
   for (const data of allContacts) {
     const outputDir = path.join(DIST_DIR, data.slug);
