@@ -1,0 +1,16 @@
+# Contact card data
+
+name:
+  first: Stefan
+  last: Huber
+  credentials:
+
+title: Digital Lead
+
+contact:
+  phone:
+    mobile: "+41 78 744 37 38"
+  email: stefan.huber@team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/signalwerk
