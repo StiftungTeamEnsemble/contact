@@ -1,6 +1,6 @@
 # Team Ensemble Contact Cards
 
-A static site generator for contact cards with vCard download support.
+A static site generator for [contact cards](https://contact.team-ensemble.ch/) with vCard download support.
 
 ## Project Structure
 
