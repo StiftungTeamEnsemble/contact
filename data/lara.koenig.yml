@@ -1,0 +1,16 @@
+# Contact card data
+
+name:
+  first: Lara
+  last: König
+  credentials:
+
+title: Projektleiterin und Founders Associate 
+
+contact:
+  phone:
+    mobile: "+41 77 434 21 46"
+  email: lara.koenig@team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/lara-oliveira-k%C3%B6nig-4a518a1b0/
