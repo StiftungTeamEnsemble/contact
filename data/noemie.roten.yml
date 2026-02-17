@@ -1,0 +1,17 @@
+# Noémie Roten
+# Contact card data
+
+name:
+  first: Noémie
+  last: Roten
+  credentials:
+
+title: Titel
+
+contact:
+  phone:
+    mobile: "+41 76 498 34 45"
+  email: noemie.roten@team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/noemie-roten/

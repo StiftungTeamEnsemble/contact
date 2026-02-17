@@ -1,0 +1,17 @@
+# Simona Boscardin
+# Contact card data
+
+name:
+  first: Simona
+  last: Boscardin
+  credentials:
+
+title: Titel
+
+contact:
+  phone:
+    mobile: "+41 79 596 75 09"
+  email: simona.boscardin@team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/simona-boscardin-30937912a/
