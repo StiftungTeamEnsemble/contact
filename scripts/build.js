@@ -16,9 +16,9 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 
 const DATA_DIR = path.join(ROOT_DIR, "data");
-const TEMPLATES_DIR = path.join(ROOT_DIR, "templates");
+const TEMPLATES_DIR = path.join(ROOT_DIR, "src/templates");
 const DIST_DIR = path.join(ROOT_DIR, "dist");
-const ASSETS_DIR = path.join(ROOT_DIR, "assets");
+const ASSETS_DIR = path.join(ROOT_DIR, "public");
 
 /**
  * Generate vCard content from contact data

@@ -1,0 +1,16 @@
+# Contact card data
+
+name:
+  first: Irene
+  last: Meier
+  credentials:
+
+title: Missionlead psychische Gesundheit junger Menschen
+
+contact:
+  phone:
+    mobile: "+41 76 588 45 58"
+  email: irene.meier@team-ensemble.ch
+
+social:
+  linkedin: https://www.linkedin.com/in/irene-meier-projuventute/
